@@ -13,13 +13,22 @@ public class Hello_Triangle : MonoBehaviour
         gameObject.AddComponent<MeshFilter>();          // Creation d'un composant MeshFilter qui peut ensuite être visualisé
         gameObject.AddComponent<MeshRenderer>();
 
-        Vector3[] vertices = new Vector3[4];            // Création des structures de données qui accueilleront sommets et  triangles
-        int[] triangles = new int[6];
+        int rows=1, cols=1;
 
+        Vector3[] vertices = new Vector3[6];            // Création des structures de données qui accueilleront sommets et  triangles
+        int[] triangles = new int[12];
+
+        int x = 0, y = 0;
+        /*for (int i = 0; i < rows*4; i++){
+            vertics[i] = new Vector3(x,y,0);
+
+        }*/
         vertices[0] = new Vector3(0, 0, 0);            // Remplissage de la structure sommet 
         vertices[1] = new Vector3(1, 0, 0);
         vertices[2] = new Vector3(0, 1, 0);
         vertices[3] = new Vector3(1, 1, 0);
+        //vertices[4] = new Vector3(1, 0, 0);
+        //vertices[5] = new Vector3(1, 1, 0);
 
 
         triangles[0] = 0;                               // Remplissage de la structure triangle. Les sommets sont représentés par leurs indices
@@ -28,6 +37,12 @@ public class Hello_Triangle : MonoBehaviour
         triangles[3] = 2;
         triangles[4] = 1;
         triangles[5] = 3;
+        /*triangles[6] = 2;
+        triangles[7] = 3;
+        triangles[8] = 4;
+        triangles[9] = 4;
+        triangles[10] = 3;
+        triangles[11] = 5;*/
 
 
 
