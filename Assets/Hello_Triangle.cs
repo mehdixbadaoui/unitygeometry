@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Hello_Triangle : MonoBehaviour
@@ -7,53 +8,124 @@ public class Hello_Triangle : MonoBehaviour
 
     public Material mat;
 
+    int yrows = 3;
+    int xcols = 4;
+
+    Vector3[] vertices;
+    int[] triangles;
+
+
     // Use this for initialization
     void Start()
     {
-        gameObject.AddComponent<MeshFilter>();          // Creation d'un composant MeshFilter qui peut ensuite être visualisé
+        gameObject.AddComponent<MeshFilter>();
         gameObject.AddComponent<MeshRenderer>();
 
-        int rows=1, cols=1;
 
-        Vector3[] vertices = new Vector3[6];            // Création des structures de données qui accueilleront sommets et  triangles
-        int[] triangles = new int[12];
+        //plan();
 
-        int x = 0, y = 0;
-        /*for (int i = 0; i < rows*4; i++){
-            vertics[i] = new Vector3(x,y,0);
+        circle(new Vector3(0, 0, 0), 3);
 
-        }*/
-        vertices[0] = new Vector3(0, 0, 0);            // Remplissage de la structure sommet 
-        vertices[1] = new Vector3(1, 0, 0);
-        vertices[2] = new Vector3(0, 1, 0);
-        vertices[3] = new Vector3(1, 1, 0);
-        //vertices[4] = new Vector3(1, 0, 0);
-        //vertices[5] = new Vector3(1, 1, 0);
-
-
-        triangles[0] = 0;                               // Remplissage de la structure triangle. Les sommets sont représentés par leurs indices
-        triangles[1] = 1;                               // les triangles sont représentés par trois indices (et sont mis bout à bout)
-        triangles[2] = 2;
-        triangles[3] = 2;
-        triangles[4] = 1;
-        triangles[5] = 3;
-        /*triangles[6] = 2;
-        triangles[7] = 3;
-        triangles[8] = 4;
-        triangles[9] = 4;
-        triangles[10] = 3;
-        triangles[11] = 5;*/
-
-
-
-
-
-        Mesh msh = new Mesh();                          // Création et remplissage du Mesh
+        Mesh msh = new Mesh();
 
         msh.vertices = vertices;
         msh.triangles = triangles;
 
-        gameObject.GetComponent<MeshFilter>().mesh = msh;           // Remplissage du Mesh et ajout du matériel
+        gameObject.GetComponent<MeshFilter>().mesh = msh;
         gameObject.GetComponent<MeshRenderer>().material = mat;
+
+
     }
+
+    void plan(){
+
+        vertices = new Vector3[(yrows+1)* (xcols+1)];
+        triangles = new int[6 * yrows * xcols];
+
+        int v = 0;
+        for(int x = 0; x <= xcols; x++){
+            for(int y = 0; y <= yrows; y++){
+                vertices[v] = new Vector3(y, x, 0);
+                Debug.Log(vertices[v]);
+                v++;
+            }
+
+        }
+
+        int vert = 0;
+        int tri = 0;
+
+        for(int i = 0; i < xcols; i++){ 
+            for(int j = 0; j < yrows; j++){
+
+                triangles[tri] = vert;                  Debug.Log(tri+" "+vert);
+                triangles[tri + 1] = vert + 1;          Debug.Log((tri + 1)+" "+(vert + 1));
+                triangles[tri + 2] = vert + yrows + 1;   Debug.Log((tri + 2)+" "+(vert + yrows + 1));
+                triangles[tri + 3] = vert + yrows + 1;   Debug.Log((tri + 3)+" "+(vert + yrows + 1));
+                triangles[tri + 4] = vert + 1;          Debug.Log((tri + 4)+" "+(vert + 1));
+                triangles[tri + 5] = vert + yrows +2;    Debug.Log((tri + 5)+" "+(vert + yrows +2));
+
+                vert ++;
+                tri += 6;
+
+            }
+            vert++;
+        }
+        // yield return new WaitForSeconds(.1f);
+
+
+
+    }
+
+    void circle(Vector3 centre, int rayon){
+        int edges = 60;
+        int r = rayon;
+        Vector3 c = centre;
+        int rotate = 10;
+        vertices = new Vector3[edges + 1];
+        triangles = new int[111];
+
+        int v = 0;
+        int angle = 0;
+        vertices[0] = new Vector3(0,0,0);
+        for (int i = 1; i < edges; i++)
+        {
+            vertices[i] = new Vector3(r * (float)Math.Cos(angle * Math.PI / 180), 0, r * (float)Math.Sin(angle * Math.PI / 180));
+            angle += 10;
+        }
+
+        int tri = 0;
+        for (int i = 0; i <= (360 / rotate); i++)
+        {
+            triangles[tri] = 0;
+            triangles[tri+1] = i + 1;
+            triangles[tri+2] = i;
+
+        tri += 3;
+        }
+        //Debug.Log(tri);
+
+        void cylindre(){
+            int edges = 60;
+            int r;
+            Vector3 ct, cb;
+            int rotate;
+            vertices = new Vector3[2*(edges + 1)];
+            triangles = new int[444];
+
+        for (int i = 1; i < edges; i++)
+        {
+            vertices[i] = new Vector3(r * (float)Math.Cos(angle * Math.PI / 180), 0, r * (float)Math.Sin(angle * Math.PI / 180));
+            angle += 10;
+        }
+
+
+
+        }
+        
+
+    }
+
+    
+
 }
