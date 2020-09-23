@@ -26,7 +26,10 @@ public class Hello_Triangle : MonoBehaviour
 
         // circle(new Vector3(0, 0, 0), 3, 4);
 
-        cylindre(new Vector3(0, 0, 0), 3, 60, 10);
+        // cylindre(new Vector3(0, 0, 0), 3, 60, 10);
+
+        sphere(new Vector3(0, 10, 0), 4, 4, 2);
+
         Mesh msh = new Mesh();
 
         msh.vertices = vertices;
@@ -84,8 +87,8 @@ public class Hello_Triangle : MonoBehaviour
         triangles = new int[ 3*edges];
 
         int start = 0;
-
         int angle = 0;
+
         vertices[0] = c;
         for (int i = 1; i <= edges; i++)
         {
@@ -171,6 +174,56 @@ public class Hello_Triangle : MonoBehaviour
         triangles[tri+9] = start_bottom + 1;
         triangles[tri+10] = 2*edges + 1;
         triangles[tri+11] = start_top + 1;
+
+
+    }
+
+    void sphere(Vector3 c, int r, int edges, int etages){
+        int rotate = 360 / edges;
+        vertices = new Vector3[2*etages*(edges + 1) + 1];
+        triangles = new int[ etages*(3*edges)];
+
+        int start = 0;
+        int angle = 0;
+
+        vertices[0] = c;
+        int v = 1;
+
+        for (int i = 1; i <= edges; i++)
+        {
+            vertices[v] = new Vector3(r * (float)Math.Cos(angle * Math.PI / 180), 10, r * (float)Math.Sin(angle * Math.PI / 180));
+            angle += rotate;
+            v++;
+        }
+        Debug.Log(v);
+
+        for(int i = 1; i< etages; i++){
+
+            vertices[v] = new Vector3(0, r + i*r/etages, 0);
+            v++;
+            for (int j = 1; j <= edges; j++)
+            {
+                float height = r  i*r/etages;
+                double new_r = Math.Sqrt(r*r - (i*r/etages)*(i*r/etages));
+                Debug.Log("old " + r + " new " + new_r);
+                vertices[v] = new Vector3((float)new_r * (float)Math.Cos(angle * Math.PI / 180), height, (float)new_r * (float)Math.Sin(angle * Math.PI / 180));
+                angle += rotate;
+                v++;
+            }
+
+            vertices[v] = new Vector3(0, r - i*r/etages, 0);
+            v++;
+            for (int j = 1; j <= edges; j++)
+            {
+                float height = r - i*r/etages;
+                double new_r = Math.Sqrt(r*r - (i*r/etages)*(i*r/etages));
+                vertices[v] = new Vector3((float)new_r * (float)Math.Cos(angle * Math.PI / 180), height, (float)new_r * (float)Math.Sin(angle * Math.PI / 180));
+                angle += rotate;
+                v++;
+            }
+
+
+        }
 
 
     }
