@@ -29,11 +29,9 @@ public class Hello_Triangle : MonoBehaviour
 
         // cylindre(new Vector3(0, 0, 0), 3, 60, 10);
 
-        cone(new Vector3(0, 0, 0), 3, 20, 5);
+        // cone(new Vector3(0, 0, 0), 3, 20, 5);
 
-        // sphere(new Vector3(0, 10, 0), 4, 4);
-
-        sphere_mat(74 ,169, 219, 0);
+        sphere(new Vector3(0, 0, 0), 4, 10);
 
         Mesh msh = new Mesh();
 
@@ -195,19 +193,21 @@ public class Hello_Triangle : MonoBehaviour
         triangles = new int[ 3*edges];
 
         int start = 0;
-        float angle1 = 0;
-        float angle2 = 0;
+        float teta = 0;
+        float phi = 0;
 
         vertices[0] = c;
         int inc = 0;
         for (int j = 0; j < edges; j++){
             for (int i = 1; i <= edges; i++)
             {
-                vertices[i+inc] = new Vector3(r * (float)Math.Cos(angle1 * Math.PI / 180), r * (float)Math.Sin(angle2 * Math.PI / 180), r * (float)Math.Sin(angle1 * Math.PI / 180));
-                angle1 += rotate1;
+                vertices[i+inc] = new Vector3(r * (float)Math.Sin(phi * Math.PI / 180) * (float)Math.Cos(teta * Math.PI / 180) ,
+                                                r * (float)Math.Sin(phi * Math.PI / 180) * (float)Math.Sin(teta * Math.PI / 180),
+                                                r * (float)Math.Cos(phi * Math.PI / 180));
+                teta += rotate1;
             }
             inc += edges;
-            angle2 += rotate2;
+            phi += rotate2;
         }
 
         int tri = start;
