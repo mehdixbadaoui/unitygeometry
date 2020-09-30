@@ -31,7 +31,7 @@ public class Hello_Triangle : MonoBehaviour
 
         // cone(new Vector3(0, 0, 0), 3, 20, 5);
 
-        sphere(new Vector3(0, 0, 0), 4, 10);
+        sphere(new Vector3(0, 0, 0), 4, 60);
 
         Mesh msh = new Mesh();
 

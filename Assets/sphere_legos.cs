@@ -22,7 +22,7 @@ public class sphere_legos : MonoBehaviour
 
         
         centres.Add(new Vector3(12, 12, 12));
-        centres.Add(new Vector3(24, 24, 24));
+        centres.Add(new Vector3(24, 18, 15));
 
         drawLegos(30, 60, 30,  centres, 10);
 
@@ -45,8 +45,6 @@ public class sphere_legos : MonoBehaviour
 
     public void drawLegos(int w, int h, int d, List<Vector3> c, int r){
         
-        vertices = new Vector3[w * h * d];
-        // triangles = new int [h*w*2];
         int v = 0;
         for (int i = 0; i < h; i++)
         {
@@ -65,9 +63,17 @@ public class sphere_legos : MonoBehaviour
                         if(dist < r) {
                             draw = true;
                         }
+                        foreach (Vector3 othercenter in centres)
+                        {
+                            if(othercenter == centre) continue;
+                            Vector3 otherdistance = current - othercenter;
+                            float otherdist = otherdistance.magnitude;
+                            if(otherdist >= r) {
+                            draw = false;
+                        }
 
+                        }
                     }
-                    // Debug.Log(dist);
 
                     if (draw){
 
@@ -84,7 +90,49 @@ public class sphere_legos : MonoBehaviour
         }
 
     }
-    
+
+    public void draw_intersec(int w, int h, int d, List<Vector3> c, int r)
+    {
+        int v = 0;
+        for (int i = 0; i < h; i++)
+        {
+            for (int j = 0; j < w; j++)
+            {
+                for (int k = 0; k < d; k++)
+                {
+                    // List<float> distances;
+                    Vector3 current = new Vector3(i, j, k);
+                    bool draw = false;
+
+                    foreach (Vector3 centre in centres)
+                    {
+                        Vector3 distance = current - centre;
+                        float dist = distance.magnitude;
+                        if (dist < r)
+                        {
+                            draw = true;
+                        }
+
+
+                    }
+
+                    if (draw)
+                    {
+
+                        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        cube.transform.position = new Vector3(i, j, k);
+
+
+                    }
+
+                }
+
+
+            }
+        }
+
+    }
+
     private void OnDrawGizmos()
     {
         if (vertices == null) return;
