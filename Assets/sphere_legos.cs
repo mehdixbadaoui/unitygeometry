@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class sphere_legos : MonoBehaviour
 {
-    public Material mat;
+    // public Material mat;
 
-    public int width, height, depth;
+    // public int width, height, depth;
     List<Vector3> centres = new List<Vector3>();
 
-    Vector3[] vertices;
-    int[] triangles;
+    // Vector3[] vertices;
+    // int[] triangles;
 
     // float step = 1;
 
@@ -20,38 +20,33 @@ public class sphere_legos : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        width = 30;
-        height = 60;
-        depth = 30;
-        gameObject.AddComponent<MeshFilter>();
-        gameObject.AddComponent<MeshRenderer>();
+        // width = 30;
+        // height = 60;
+        // depth = 30;
+        // gameObject.AddComponent<MeshFilter>();
+        // gameObject.AddComponent<MeshRenderer>();
 
         
         centres.Add(new Vector3(12, 12, 12));
         centres.Add(new Vector3(15, 15, 15));
         // centres.Add(new Vector3(0, 12, 12));
 
-        drawLegos_count(centres, 10, 9);
-        // drawLegos_size(centres, 10, 0.5f);
+        // drawLegos_count(centres, 10, 9);
+        drawLegos_size(centres, 10, 1f);
         // draw_intersec(centres, 10, 10);
         // draw_diff(width, height, depth, new Vector3(12, 12, 12), centres, 10);
 
-        Mesh msh = new Mesh();
+        // Mesh msh = new Mesh();
         
-        msh.vertices = vertices;
-        msh.triangles = triangles;
+        // msh.vertices = vertices;
+        // msh.triangles = triangles;
 
-        gameObject.GetComponent<MeshFilter>().mesh = msh;
-        gameObject.GetComponent<MeshRenderer>().material = mat;
+        // gameObject.GetComponent<MeshFilter>().mesh = msh;
+        // gameObject.GetComponent<MeshRenderer>().material = mat;
 
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
+
     public void drawCube(Vector3 v, float step){
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.transform.localScale =new Vector3 (step, step, step);
