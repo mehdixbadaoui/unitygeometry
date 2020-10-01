@@ -13,7 +13,7 @@ public class sphere_legos : MonoBehaviour
     Vector3[] vertices;
     int[] triangles;
 
-    float step = 1;
+    // float step = 1;
 
 
 
@@ -27,12 +27,13 @@ public class sphere_legos : MonoBehaviour
         gameObject.AddComponent<MeshRenderer>();
 
         
-        // centres.Add(new Vector3(12, 12, 12));
+        centres.Add(new Vector3(12, 12, 12));
         centres.Add(new Vector3(15, 15, 15));
-        centres.Add(new Vector3(24, 24, 24));
+        // centres.Add(new Vector3(0, 12, 12));
 
-        // drawLegos(centres, 10, step);
-        draw_intersec(centres, 10, step);
+        drawLegos_count(centres, 10, 9);
+        // drawLegos_size(centres, 10, 0.5f);
+        // draw_intersec(centres, 10, 10);
         // draw_diff(width, height, depth, new Vector3(12, 12, 12), centres, 10);
 
         Mesh msh = new Mesh();
@@ -59,7 +60,7 @@ public class sphere_legos : MonoBehaviour
 
     }
 
-    public void drawLegos(List <Vector3> c, int r, float step){
+    public void drawLegos_count(List <Vector3> c, int r, int nb_cubes){
         
         // starting point and ending point
         Vector3 min = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
@@ -75,13 +76,19 @@ public class sphere_legos : MonoBehaviour
             
         }
 
+        float xstep = Math.Abs(max.x - min.x);
+        float ystep = Math.Abs(max.y - min.y);
+        float zstep = Math.Abs(max.z - min.z);
+
+
+        float step = Math.Min(xstep, Math.Min(ystep, zstep)) / nb_cubes;
+
         for (float i = min.x - r; i < max.x + r; i+=step)
         {
             for (float j = min.y - r; j < max.y + r; j+=step)
             {
                 for (float k = min.z - r; k < max.z + r; k+=step)
                 {
-                    // List<float> distances;
                     Vector3 current = new Vector3(i, j, k);
                     bool draw = false;
 
@@ -107,7 +114,9 @@ public class sphere_legos : MonoBehaviour
 
     }
 
-    public void draw_intersec(List <Vector3> c, int r, float step){
+    public void drawLegos_size(List <Vector3> c, int r, float size){
+        
+        // starting point and ending point
         Vector3 min = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
         Vector3 max = new Vector3(0, 0, 0);
         foreach(Vector3 center in c){
@@ -120,6 +129,57 @@ public class sphere_legos : MonoBehaviour
             min.z = Math.Min(min.z, center.z);
             
         }
+
+        for (float i = min.x - r; i < max.x + r; i+=size)
+        {
+            for (float j = min.y - r; j < max.y + r; j+=size)
+            {
+                for (float k = min.z - r; k < max.z + r; k+=size)
+                {
+                    Vector3 current = new Vector3(i, j, k);
+                    bool draw = false;
+
+                    foreach (Vector3 centre in c)
+                    {
+                        Vector3 distance = current - centre;
+                        float dist = distance.magnitude;
+                        if(dist < r) {
+                            draw = true;
+                        }
+                    }
+
+                    if (draw){
+                        drawCube(current, size);
+
+                    }
+
+                }
+
+
+            }
+        }
+
+    }
+
+    public void draw_intersec(List <Vector3> c, int r, int nb_cubes){
+        Vector3 min = new Vector3(float.PositiveInfinity, float.PositiveInfinity, float.PositiveInfinity);
+        Vector3 max = new Vector3(0, 0, 0);
+        foreach(Vector3 center in c){
+            max.x = Math.Max(max.x, center.x);
+            max.y = Math.Max(max.y, center.y);
+            max.z = Math.Max(max.z, center.z);
+
+            min.x = Math.Min(min.x, center.x);
+            min.y = Math.Min(min.y, center.y);
+            min.z = Math.Min(min.z, center.z);
+            
+        }
+
+        float xstep = Math.Abs(max.x - min.x);
+        float ystep = Math.Abs(max.y - min.y);
+        float zstep = Math.Abs(max.z - min.z);
+
+        float step = Math.Min(xstep, Math.Min(ystep, zstep)) / nb_cubes;
 
         for (float i = min.x - r; i < max.x + r; i+=step)
         {
@@ -169,7 +229,6 @@ public class sphere_legos : MonoBehaviour
 
     private void draw_diff(int w, int h, int d, Vector3 c1, List<Vector3> c, int r){
 
-        int v = 0;
         for (float i = 0; i < h; i+=0.5f)
         {
             for (float j = 0; j < w; j+=0.5f)
@@ -211,16 +270,6 @@ public class sphere_legos : MonoBehaviour
         }
 
 
-    }
-    private void OnDrawGizmos()
-    {
-        // if (vertices == null) return;
-        // Gizmos.color = Color.black;
-        // Gizmos.DrawSphere(new Vector3, new Vector3(0.1f, 0.1f, 0.1f));
-        // foreach (Vector3 point in vertices)
-        // {
-        //     Gizmos.DrawCube(point, new Vector3(0.1f, 0.1f, 0.1f));
-        // }
     }
 
 }

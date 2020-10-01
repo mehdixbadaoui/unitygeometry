@@ -187,7 +187,7 @@ public class Hello_Triangle : MonoBehaviour
 
 
 
-        float rotate1 = 360 / edges;
+        float rotate1 = 360 / edges*2;
         float rotate2 = 360 / edges;
         vertices = new Vector3[edges * edges + 1];
         triangles = new int[ 3*edges];
@@ -211,18 +211,22 @@ public class Hello_Triangle : MonoBehaviour
         }
 
         int tri = start;
-        for (int i = 1; i < edges; i++)
-        {
-            triangles[tri] = 0;
-            triangles[tri+1] = i + 1;
-            triangles[tri+2] = i;
+        triangles[0] = 0;
+        triangles[1] = 1;
+        triangles[2] = 2;
 
-        tri += 3;
-        }
+        // for (int i = 1; i < edges; i++)
+        // {
+        //     triangles[tri] = 0;
+        //     triangles[tri+1] = i + 1;
+        //     triangles[tri+2] = i;
 
-        triangles[tri] = start;
-        triangles[tri+1] = start + 1;
-        triangles[tri+2] = edges;
+        // tri += 3;
+        // }
+
+        // triangles[tri] = start;
+        // triangles[tri+1] = start + 1;
+        // triangles[tri+2] = edges;
 
 
 
